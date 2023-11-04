@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static java.util.Objects.isNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class JenaTest {
 
@@ -100,6 +101,16 @@ class JenaTest {
         var queryString = stringFromResources("/age.sparql");
         var actual = JenaTool.extractOwnerAgeReport(model, queryString);
         assertEquals(expected, actual);
+    }
+
+    // Task 5
+    @Test
+    void shouldReturnWhetherEwanHasCat() {
+        var model = getModel("/animals.nt");
+        addToModel(model, "/fakeschema.ttl");
+        var queryString = stringFromResources("/does-ewan-have-a-cat.sparql");
+        var actual = JenaTool.ask(queryString);
+        assertFalse(actual);
     }
 
     private void addToModel(Model model, String file) {

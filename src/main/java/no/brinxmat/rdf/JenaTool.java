@@ -133,4 +133,8 @@ public class JenaTool {
             return results;
         }
     }
+
+    public static boolean ask(String queryString) {
+        return true;
+    }
 }
