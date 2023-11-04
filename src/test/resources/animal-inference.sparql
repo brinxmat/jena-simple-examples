@@ -2,7 +2,7 @@ PREFIX : <https://fakeschema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT DISTINCT ?petType WHERE {
-
-  # Do some inferencing!
-
+  [] :hasPet ?pet .
+  ?pet a ?petType .
+  ?petType rdfs:subClassOf :Animal .
 } ORDER BY ASC(?petType)

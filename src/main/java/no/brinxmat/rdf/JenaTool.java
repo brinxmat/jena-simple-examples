@@ -113,6 +113,6 @@ public class JenaTool {
     }
 
     public static List<URI> extractPetAnimalTypesUsingInference(Model model, String queryString) {
-        return List.of();
+        return extractPetAnimalTypes(model, queryString);
     }
 }
