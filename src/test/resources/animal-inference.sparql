@@ -1,0 +1,8 @@
+PREFIX : <https://fakeschema.org/>
+PREFIX rdfs: <>
+
+SELECT DISTINCT ?petType WHERE {
+
+  # Do some inferencing!
+
+} ORDER BY ASC(?petType)
