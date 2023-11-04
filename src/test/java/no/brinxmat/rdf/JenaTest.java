@@ -103,7 +103,7 @@ class JenaTest {
         assertEquals(expected, actual);
     }
 
-    // Task 5
+    // Task 5 — OWA…help…just run the test as is!
     @Test
     void shouldReturnWhetherEwanHasCat() {
         var model = getModel("/animals.nt");
