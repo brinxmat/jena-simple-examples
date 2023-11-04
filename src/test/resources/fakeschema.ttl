@@ -1,0 +1,25 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix : <https://fakeschema.org/>
+
+:Animal a rdfs:Class .
+
+:Person a rdfs:Class ;
+  rdfs:subClassOf :Animal .
+
+:Cat a rdfs:Class ;
+  rdfs:subClassOf :Animal .
+
+:Dog a rdfs:Class ;
+  rdfs:subClassOf :Animal .
+
+:Horse a rdfs:Class ;
+  rdfs:subClassOf :Animal .
+
+:Mineral a rdfs:Class .
+
+:Rock a rdfs:Class ;
+  rdfs:subClassOf :Mineral .
+
+:PetRock a rdfs:Class ;
+  rdfs:subClassOf :Rock .

@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'no.brinxmat'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.apache.jena', name: 'jena', version: '4.10.0'
+    implementation group: 'org.apache.jena', name: 'jena-arq', version: '4.10.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+}
+
+test {
+    useJUnitPlatform()
+}
