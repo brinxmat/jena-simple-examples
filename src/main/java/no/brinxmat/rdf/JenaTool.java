@@ -9,7 +9,9 @@ import org.apache.jena.vocabulary.RDF;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
@@ -114,5 +116,9 @@ public class JenaTool {
 
     public static List<URI> extractPetAnimalTypesUsingInference(Model model, String queryString) {
         return extractPetAnimalTypes(model, queryString);
+    }
+
+    public static Map<String, Integer> extractOwnerAgeReport(Model model, String queryString) {
+        return Map.of();
     }
 }

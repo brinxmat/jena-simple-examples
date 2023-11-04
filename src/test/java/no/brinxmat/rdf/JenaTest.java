@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Objects.isNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -88,6 +89,15 @@ class JenaTest {
                 URI.create("https://fakeschema.org/Horse"));
         var queryString = stringFromResources("/animal-inference.sparql");
         var actual = JenaTool.extractPetAnimalTypesUsingInference(model, queryString);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldReturnReportOfHumansAndAges() {
+        var model = getModel("/animals.nt");
+        var expected = Map.of("Eric", 30, "Ian", 33, "Jim", 29, "Paul", 30);
+        var queryString = stringFromResources("/age.sparql");
+        var actual = JenaTool.extractOwnerAgeReport(model, queryString);
         assertEquals(expected, actual);
     }
 
