@@ -1,6 +1,6 @@
 <https://example.org/jim> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://fakeschema.org/Person> .
 <https://example.org/jim> <https://fakeschema.org/name> "Jim"@en .
-<https://example.org/jim> <https://fakeschema.org/birthDate> "1992-12-01"^^<http://www.w3.org/2001/XMLSchema#:gDate> .
+<https://example.org/jim> <https://fakeschema.org/birthDate> "1993-12-01"^^<http://www.w3.org/2001/XMLSchema#:gDate> .
 <https://example.org/jim> <https://fakeschema.org/hasPet> _:b0 .
 _:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://fakeschema.org/Cat> .
 _:bo <https://fakeschema.org/name> "Tom"@en .
