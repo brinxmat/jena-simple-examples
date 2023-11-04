@@ -54,10 +54,12 @@ class JenaTest {
     // Task 1: fix the code to return animals
 
     @Test
-    void shouldReturnAllCats() {
+    void shouldReturnAllPetAnimalTypes() {
         var model = getModel("/animals.nt");
         var subjects = JenaTool.extractTypes(model);
-        var expected = List.of(URI.create("https://schema.org/Person"));
+        var expected = List.of(URI.create("https://schema.org/Cat"),
+                URI.create("https://schema.org/Dog"),
+                URI.create("https://schema.org/Horse"));
         assertEquals(expected, subjects);
     }
 
