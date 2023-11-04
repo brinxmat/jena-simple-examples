@@ -92,6 +92,7 @@ class JenaTest {
         assertEquals(expected, actual);
     }
 
+    // Task 4
     @Test
     void shouldReturnReportOfHumansAndAges() {
         var model = getModel("/animals.nt");

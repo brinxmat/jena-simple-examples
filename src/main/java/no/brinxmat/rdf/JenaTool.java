@@ -119,6 +119,18 @@ public class JenaTool {
     }
 
     public static Map<String, Integer> extractOwnerAgeReport(Model model, String queryString) {
-        return Map.of();
+        try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            var resultSet = queryExecution.execSelect();
+            var results = new HashMap<String, Integer>();
+            while (resultSet.hasNext()) {
+                var querySolution = resultSet.next();
+                if (nonNull(querySolution)) {
+                    var currentName = querySolution.get("name").asLiteral().getString();
+                    var currentAge = Integer.parseInt(querySolution.get("age").asLiteral().getString());
+                    results.put(currentName, currentAge);
+                }
+            }
+            return results;
+        }
     }
 }
