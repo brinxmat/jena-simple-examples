@@ -134,7 +134,7 @@ public class JenaTool {
         }
     }
 
-    public static boolean ask(Model mode, String queryString) {
+    public static boolean ask(Model model, String queryString) {
         return true;
     }
 }
