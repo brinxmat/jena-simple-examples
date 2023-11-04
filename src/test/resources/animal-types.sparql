@@ -1,0 +1,7 @@
+PREFIX : <https://fakeschema.org/>
+
+SELECT DISTINCT ?petType WHERE {
+  ?uri :hasPet ?pet .
+  ?pet a ?petType .
+  FILTER(STR(?petType) != "https://fakeschema.org/PetRock")
+} ORDER BY ASC(?petType)

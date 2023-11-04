@@ -1,6 +1,14 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix : <https://fakeschema.org/>
+@prefix : <https://fakeschema.org/> .
+
+:hasPet a rdf:Property ;
+  rdfs:domain :Person ;
+  rdfs:range rdf:langString .
+
+:hasName a rdf:Property ;
+  rdfs:domain :Animal ;
+  rdfs:range rdf:langString .
 
 :Animal a rdfs:Class .
 

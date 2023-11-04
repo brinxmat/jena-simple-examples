@@ -7,7 +7,9 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -56,23 +58,64 @@ class JenaTest {
     @Test
     void shouldReturnAllPetAnimalTypes() {
         var model = getModel("/animals.nt");
-        var subjects = JenaTool.extractPPetAnimalTypes(model);
+        var subjects = JenaTool.extractPetAnimalTypes(model);
         var expected = List.of(URI.create("https://fakeschema.org/Cat"),
                 URI.create("https://fakeschema.org/Dog"),
                 URI.create("https://fakeschema.org/Horse"));
         assertEquals(expected, subjects);
     }
 
-    private static Model getModel(String file) {
-        var model = ModelFactory.createDefaultModel();
-        try (var data = JenaTest.class.getResourceAsStream(file)) {
-            if (isNull(data)) {
-                throw new RuntimeException("No data for file: " + file);
-            }
-            RDFDataMgr.read(model, data, Lang.NTRIPLES);
-            return model;
+    @Test
+    void shouldReturnAllPetAnimalTypesUsingSparql() {
+        var model = getModel("/animals.nt");
+        var query = stringFromResources("/animal-types.sparql");
+
+        var subjects = JenaTool.extractPetAnimalTypes(model, query);
+        var expected = List.of(URI.create("https://fakeschema.org/Cat"),
+                URI.create("https://fakeschema.org/Dog"),
+                URI.create("https://fakeschema.org/Horse"));
+        assertEquals(expected, subjects);
+    }
+
+    @Test
+    void shouldReturnAllPetAnimalTypesUsingInference() {
+        var model = getModel("/animals.nt");
+        addToModel(model, "/fakeschema.ttl");
+        var expected = List.of(URI.create("https://fakeschema.org/Cat"),
+                URI.create("https://fakeschema.org/Dog"),
+                URI.create("https://fakeschema.org/Horse"));
+        var actual = JenaTool.extractPetAnimalTypesUsingInference(model);
+        assertEquals(expected, actual);
+    }
+
+    private void addToModel(Model model, String file) {
+        var data = inputStreamFromResources(file);
+        var serialization = "ttl".equalsIgnoreCase(file.substring(file.lastIndexOf(".") + 1))
+                ? Lang.TURTLE
+                : Lang.NTRIPLES;
+            RDFDataMgr.read(model, data, serialization);
+    }
+
+    private static String stringFromResources(String file) {
+        try (var inputStream = inputStreamFromResources(file)) {
+            return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Model getModel(String file) {
+        var model = ModelFactory.createDefaultModel();
+        var data = inputStreamFromResources(file);
+        RDFDataMgr.read(model, data, Lang.NTRIPLES);
+        return model;
+    }
+
+    private static InputStream inputStreamFromResources(String file) {
+        var data = JenaTest.class.getResourceAsStream(file);
+        if (isNull(data)) {
+            throw new RuntimeException("No data for file: " + file);
+        }
+        return data;
     }
 }

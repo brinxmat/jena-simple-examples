@@ -1,5 +1,6 @@
 package no.brinxmat.rdf;
 
+import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
@@ -9,6 +10,8 @@ import org.apache.jena.vocabulary.RDF;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 public class JenaTool {
 
@@ -73,7 +76,7 @@ public class JenaTool {
                 .toList();
     }
 
-    public static List<URI> extractPPetAnimalTypes(Model model) {
+    public static List<URI> extractPetAnimalTypes(Model model) {
         var hasPet = model.createProperty("https://fakeschema.org/hasPet");
         return model.listObjectsOfProperty(hasPet).toList()
                 .stream()
@@ -92,5 +95,24 @@ public class JenaTool {
 
     private static boolean isNotPetRock(URI type) {
         return !type.equals(URI.create("https://fakeschema.org/PetRock"));
+    }
+
+    public static List<URI> extractPetAnimalTypes(Model model, String queryString) {
+        try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            var resultSet = queryExecution.execSelect();
+            var results = new ArrayList<URI>();
+            while (resultSet.hasNext()) {
+                var querySolution = resultSet.next();
+                if (nonNull(querySolution)) {
+                    var current = querySolution.get("petType").toString();
+                    results.add(URI.create(current));
+                }
+            }
+            return results;
+        }
+    }
+
+    public static List<URI> extractPetAnimalTypesUsingInference(Model model) {
+        return List.of();
     }
 }
