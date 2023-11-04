@@ -1,3 +1,7 @@
+PREFIX : <https://fakeschema.org/>
+
 ASK {
-  # Find Ewan, do they have a cat, if so return true, else false
+  ?ewan :name "Ewan"@en ;
+        :hasPet ?pet .
+  ?pet a :Cat .
 }

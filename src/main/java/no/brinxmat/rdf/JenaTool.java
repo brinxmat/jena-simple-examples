@@ -135,6 +135,8 @@ public class JenaTool {
     }
 
     public static boolean ask(Model model, String queryString) {
-        return true;
+        try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            return queryExecution.execAsk();
+        }
     }
 }
