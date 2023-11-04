@@ -86,7 +86,7 @@ class JenaTest {
         var expected = List.of(URI.create("https://fakeschema.org/Cat"),
                 URI.create("https://fakeschema.org/Dog"),
                 URI.create("https://fakeschema.org/Horse"));
-        var queryString = stringFromResources("animal-inference.sparql");
+        var queryString = stringFromResources("/animal-inference.sparql");
         var actual = JenaTool.extractPetAnimalTypesUsingInference(model, queryString);
         assertEquals(expected, actual);
     }
