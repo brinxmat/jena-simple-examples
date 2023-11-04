@@ -3,6 +3,7 @@ package no.brinxmat.rdf;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.vocabulary.RDF;
 
 import java.net.URI;
@@ -70,5 +71,26 @@ public class JenaTool {
                 .map(Resource::getURI)
                 .map(URI::create)
                 .toList();
+    }
+
+    public static List<URI> extractPPetAnimalTypes(Model model) {
+        var hasPet = model.createProperty("https://fakeschema.org/hasPet");
+        return model.listObjectsOfProperty(hasPet).toList()
+                .stream()
+                .map(pet -> model.listStatements(pet.asResource(), RDF.type, (RDFNode) null).toList())
+                .flatMap(List::stream)
+                .filter(i -> i.getPredicate().equals(RDF.type))
+                .map(Statement::getObject)
+                .map(RDFNode::asResource)
+                .map(Resource::getURI)
+                .map(URI::create)
+                .filter(JenaTool::isNotPetRock)
+                .distinct()
+                .sorted()
+                .toList();
+    }
+
+    private static boolean isNotPetRock(URI type) {
+        return !type.equals(URI.create("https://fakeschema.org/PetRock"));
     }
 }

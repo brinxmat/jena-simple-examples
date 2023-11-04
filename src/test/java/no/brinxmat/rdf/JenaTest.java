@@ -56,7 +56,7 @@ class JenaTest {
     @Test
     void shouldReturnAllPetAnimalTypes() {
         var model = getModel("/animals.nt");
-        var subjects = JenaTool.extractTypes(model);
+        var subjects = JenaTool.extractPPetAnimalTypes(model);
         var expected = List.of(URI.create("https://fakeschema.org/Cat"),
                 URI.create("https://fakeschema.org/Dog"),
                 URI.create("https://fakeschema.org/Horse"));
