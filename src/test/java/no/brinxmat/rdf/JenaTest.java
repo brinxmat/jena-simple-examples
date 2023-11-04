@@ -109,7 +109,7 @@ class JenaTest {
         var model = getModel("/animals.nt");
         addToModel(model, "/fakeschema.ttl");
         var queryString = stringFromResources("/does-ewan-have-a-cat.sparql");
-        var actual = JenaTool.ask(queryString);
+        var actual = JenaTool.ask(model, queryString);
         assertFalse(actual);
     }
 
