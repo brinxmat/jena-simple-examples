@@ -1,12 +1,20 @@
 package no.brinxmat.rdf;
 
+import com.apicatalog.jsonld.JsonLd;
+import com.apicatalog.jsonld.JsonLdError;
+import com.apicatalog.jsonld.document.JsonDocument;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.riot.Lang;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.vocabulary.RDF;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.StringReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,5 +146,26 @@ public class JenaTool {
         try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
             return queryExecution.execAsk();
         }
+    }
+
+    public static String serializeResult(Model model, String queryString) {
+        try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            var resultModel = queryExecution.execDescribe();
+            var document = JsonDocument.of(toJsonReader(resultModel));
+            var context = JsonDocument.of(getPersonFrame());
+            return JsonLd.frame(document, context).get().toString();
+        } catch (JsonLdError e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static StringReader toJsonReader(Model resultModel) {
+        var outputStream = new ByteArrayOutputStream();
+        RDFDataMgr.write(outputStream, resultModel, Lang.JSONLD);
+        return new StringReader(outputStream.toString());
+    }
+
+    private static InputStream getPersonFrame() {
+        return JenaTool.class.getResourceAsStream("/jsonld-context.json");
     }
 }
