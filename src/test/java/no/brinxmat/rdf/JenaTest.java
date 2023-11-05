@@ -133,7 +133,7 @@ class JenaTest {
         var model = getModel("/animals.nt");
         addToModel(model, "/fakeschema.ttl");
         var queryString = stringFromResources("/reserialize-paul.sparql");
-        var actual = JSON.readTree(JenaTool.serializeResult(model, queryString));
+        var actual = JSON.readTree(JenaTool.reserializeResult(model, queryString));
         var expected = JSON.readTree(inputStreamFromResources("/expected-paul.json"));
         assertEquals(expected, actual);
     }
