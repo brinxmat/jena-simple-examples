@@ -22,8 +22,7 @@
 :Animal a rdfs:Class .
 
 :Person a rdfs:Class ;
-  rdfs:subClassOf :Animal ;
-  rdfs:subPropertyOf foaf:person .
+  rdfs:subClassOf :Animal, foaf:person .
 
 :Cat a rdfs:Class ;
   rdfs:subClassOf :Animal .
