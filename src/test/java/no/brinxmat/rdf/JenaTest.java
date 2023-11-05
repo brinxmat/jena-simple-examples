@@ -127,6 +127,17 @@ class JenaTest {
         assertEquals(expected, actual);
     }
 
+    // Task 7
+    @Test
+    void shouldReserializePaulsDataToCommonVocabularies() throws IOException {
+        var model = getModel("/animals.nt");
+        addToModel(model, "/fakeschema.ttl");
+        var queryString = stringFromResources("/reserialize-paul.sparql");
+        var actual = JSON.readTree(JenaTool.serializeResult(model, queryString));
+        var expected = JSON.readTree(inputStreamFromResources("/expected-paul.json"));
+        assertEquals(expected, actual);
+    }
+
     private void addToModel(Model model, String file) {
         var data = inputStreamFromResources(file);
         var serialization = "ttl".equalsIgnoreCase(file.substring(file.lastIndexOf(".") + 1))
