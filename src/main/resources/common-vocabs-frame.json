@@ -1,0 +1,14 @@
+{
+  "@context": {
+    "id": "@id",
+    "type": "@type",
+    "schema": "https://schema.org/",
+    "Person": "http://xmlns.com/foaf/0.1/Person",
+    "name": "http://xmlns.com/foaf/0.1/name",
+    "birthDate": {
+      "@id": "schema:birthDate",
+      "@type": "schema:Date"
+    }
+  },
+  "@type": "Person"
+}

@@ -152,7 +152,19 @@ public class JenaTool {
         try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
             var resultModel = queryExecution.execDescribe();
             var document = JsonDocument.of(toJsonReader(resultModel));
-            var context = JsonDocument.of(getPersonFrame());
+            var context = JsonDocument.of(getPersonFrame("/jsonld-context.json"));
+            return JsonLd.frame(document, context).get().toString();
+        } catch (JsonLdError e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static String reserializeResult(Model model, String queryString) {
+        try (var queryExecution = QueryExecutionFactory.create(queryString, model)) {
+            var resultModel = queryExecution.execConstruct();
+            var document = JsonDocument.of(toJsonReader(resultModel));
+            var context = JsonDocument.of(getPersonFrame("/common-vocabs-frame.json"));
             return JsonLd.frame(document, context).get().toString();
         } catch (JsonLdError e) {
             throw new RuntimeException(e);
@@ -165,7 +177,7 @@ public class JenaTool {
         return new StringReader(outputStream.toString());
     }
 
-    private static InputStream getPersonFrame() {
-        return JenaTool.class.getResourceAsStream("/jsonld-context.json");
+    private static InputStream getPersonFrame(String file) {
+        return JenaTool.class.getResourceAsStream(file);
     }
 }
