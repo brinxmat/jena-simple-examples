@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@vocab": "https://fakeschema.org/",
+    "id": "@id",
+    "type": "@type",
+    "birthDate": {
+      "@type": "http://www.w3.org/2001/XMLSchema#gDate"
+    },
+    "name": {
+      "@container": "@language"
+    }
+  },
+  "id": "https://example.org/eric",
+  "type": "Person",
+  "birthDate": "1993-02-01",
+  "name": {
+    "en": "Eric"
+  },
+  "hasPet": [
+    {
+      "type": "Cat",
+      "name": {
+        "en": "Eivor"
+      }
+    },
+    {
+      "type": "Horse",
+      "name": {
+        "en": "Nerhys"
+      }
+    }
+  ]
+}

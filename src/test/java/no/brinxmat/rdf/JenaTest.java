@@ -1,5 +1,7 @@
 package no.brinxmat.rdf;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.riot.Lang;
@@ -18,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class JenaTest {
+
+    public static final ObjectMapper JSON = new ObjectMapper();
 
     @Test
     void shouldReturnAllSubjects() {
@@ -111,6 +115,17 @@ class JenaTest {
         var queryString = stringFromResources("/does-ewan-have-a-cat.sparql");
         var actual = JenaTool.ask(model, queryString);
         assertFalse(actual);
+    }
+
+    // Task 6: serialize Eric as JSON-LD
+
+    @Test
+    void shouldReturnEricAsJsonLd() throws IOException {
+        var model = getModel("/animals.nt");
+        var queryString = stringFromResources("/eric.sparql");
+        var actual = JSON.readTree(JenaTool.serializeResult(model, queryString));
+        var expected = JSON.readTree(inputStreamFromResources("/expected-eric.json"));
+        assertEquals(expected, actual);
     }
 
     private void addToModel(Model model, String file) {
