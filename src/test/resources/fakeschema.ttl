@@ -9,7 +9,7 @@
   rdfs:domain :Person ;
   rdfs:range rdfs:Resource .
 
-:hasName a rdf:Property ;
+:name a rdf:Property ;
   rdfs:domain :Animal ;
   rdfs:range rdf:langString ;
   rdfs:subPropertyOf foaf:name .
@@ -22,7 +22,7 @@
 :Animal a rdfs:Class .
 
 :Person a rdfs:Class ;
-  rdfs:subClassOf :Animal, foaf:person .
+  rdfs:subClassOf :Animal, foaf:Person .
 
 :Cat a rdfs:Class ;
   rdfs:subClassOf :Animal .
