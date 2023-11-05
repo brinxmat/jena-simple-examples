@@ -1,11 +1,29 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix : <https://fakeschema.org/>
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <https://fakeschema.org/> .
+
+:hasPet a rdf:Property ;
+  rdfs:domain :Person ;
+  rdfs:range rdfs:Resource .
+
+:hasName a rdf:Property ;
+  rdfs:domain :Animal ;
+  rdfs:range rdf:langString ;
+  rdfs:subPropertyOf foaf:name .
+
+:birthDate a rdf:Property ;
+  rdfs:domain :Person ;
+  rdfs:range xsd:gDate ;
+  rdfs:subPropertyOf schema:birthDate .
 
 :Animal a rdfs:Class .
 
 :Person a rdfs:Class ;
-  rdfs:subClassOf :Animal .
+  rdfs:subClassOf :Animal ;
+  rdfs:subPropertyOf foaf:person .
 
 :Cat a rdfs:Class ;
   rdfs:subClassOf :Animal .
